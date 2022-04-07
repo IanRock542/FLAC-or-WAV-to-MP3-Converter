@@ -1,0 +1,5 @@
+ffmpeg==1.4
+mutagen==1.45.1
+pydub==0.25.1
+simpleaudio==1.0.4
+tinytag==1.8.1
