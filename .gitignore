@@ -3,3 +3,4 @@ wav_to_mp3.py
 *.mp3
 *.wav
 *.flac
+__pycache__
