@@ -22,25 +22,10 @@ def select_files(filetype: str) -> str:
     """
     Controls which file types are shown and able to be selected depending on which file selection button is pressed.
     """
-    if filetype == 'WAV':
-        filetypes = (
-            ('WAV files', '*.wav'),
-            ('All files', '*.*'))
-        filename = askopenfilenames(
-            title='Open WAV files',
-            filetypes=filetypes
-            )
-        return filename
-    elif filetype =='FLAC':
-        filetypes = (
-            ('FLAC files', '*.flac'),
-            ('All files', '*.*')
-        )
-        filename = askopenfilenames(
-            title='Open FLAC files',
-            filetypes=filetypes
-        )
-        return filename
+    return askopenfilenames(
+        title=f"Open {filetype} files",
+        filetypes=((f"{filetype} files", f"*.{filetype.lower()}"),)
+    )
 
 def convert_wav(wav_files: str) -> None:
     """
@@ -98,6 +83,7 @@ def finished(files: str) -> None:
     Displays a message box when the conversion completes.
     """
     messagebox.showinfo(message=f"Converted {files}.")
+
 def start_flac_thread() -> None:
     """
     Creates thread to allow progressbar to run concurrently with convert_flac().
@@ -106,7 +92,6 @@ def start_flac_thread() -> None:
     pb.start()
     t = threading.Thread(target=convert_flac, args=(flac_files,))
     t.start()
-
 
 def start_wav_thread() -> None:
     """
@@ -117,7 +102,6 @@ def start_wav_thread() -> None:
     t2 = threading.Thread(target=convert_wav, args=(wav_files,))
     t2.start()
 
-
 #Create widgets
 convert_wav_btn = ttk.Button(
     c, 
@@ -125,6 +109,7 @@ convert_wav_btn = ttk.Button(
     command=start_wav_thread,
     default="active"
 )
+
 convert_flac_btn = ttk.Button(
     c, 
     text="Convert FLAC", 
